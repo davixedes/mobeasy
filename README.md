@@ -12,9 +12,9 @@
 
 | Nome Completo | Matrícula | Função |
 |---------------|-----------|--------|
-| [Nome 1]      | [RA 1]    | DEV    |
-| [Nome 2]      | [RA 2]    | HOM    |
-| [Nome 3]      | [RA 3]    | PRD    |
+| [João Cardoso dos Santos de Jesus]      | [RM 560400]    | DEV    |
+| [Kaue Vinicius Samartino]      | [RM 559317]    | HOM    |
+| [Davi Praxedes Santos Silva]      | [RM 560719]    | PRD    |
 
 ---
 
