@@ -2,9 +2,9 @@
 
 **Turma:** 2TDSPS-2025  
 
-**Grupo:** [Nome do Grupo]  
+**Grupo:** Sentinel  
 
-**Repositório:** [Link do repositório GitHub]  
+**Repositório:** https://github.com/davixedes/mobeasy 
 
 ---
 
@@ -13,8 +13,8 @@
 | Nome Completo | Matrícula | Função |
 |---------------|-----------|--------|
 | João Cardoso dos Santos de Jesus      | RM 560400    | DEV    |
-| Kaue Vinicius Samartino      | RM 559317    | HOM    |
-| Davi Praxedes Santos Silva      | RM 560719    | PRD    |
+| Kaue Vinicius Samartino               | RM 559317    | HOM    |
+| Davi Praxedes Santos Silva            | RM 560719    | PRD    |
 
 ---
 

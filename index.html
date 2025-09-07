@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>P2P Carros – Aluguel P2P</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --radius: 1.25rem; }
+    html, body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+    .card { border-radius: var(--radius); }
+    .glass { backdrop-filter: blur(8px); background: rgba(255,255,255,0.65); }
+    .shadow-soft { box-shadow: 0 6px 30px rgba(2,6,23,0.08); }
+    .btn { border-radius: 999px; font-weight: 600; }
+    .input { border-radius: 0.9rem; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-30 bg-white/80 backdrop-blur border-b border-slate-200">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-2xl bg-slate-900 text-white grid place-content-center font-black">P2P</div>
+        <span class="font-semibold">Carros</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#catalogo" class="hover:text-slate-900 text-slate-600">Catálogo</a>
+        <a href="#anunciar" class="hover:text-slate-900 text-slate-600">Anunciar</a>
+        <a href="#minhas-reservas" class="hover:text-slate-900 text-slate-600">Minhas Reservas</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <button id="openBooking" class="hidden md:inline-flex btn px-4 py-2 bg-slate-900 text-white hover:opacity-90">Nova Reserva</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-sky-50"></div>
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <h1 class="text-4xl md:text-5xl font-black leading-tight">
+            Aluguel de carros <span class="text-indigo-600">P2P</span> simples e seguro
+          </h1>
+          <p class="mt-4 text-slate-600 text-lg">Encontre o carro ideal na sua região ou anuncie o seu para gerar renda extra. Pagamentos e reservas em poucos cliques.</p>
+          <div class="mt-6 flex gap-3">
+            <a href="#catalogo" class="btn px-5 py-3 bg-indigo-600 text-white hover:opacity-90">Explorar carros</a>
+            <a href="#anunciar" class="btn px-5 py-3 bg-white border border-slate-200 hover:bg-slate-50">Anunciar veículo</a>
+          </div>
+          <div class="mt-6 text-sm text-slate-500">* Protótipo acadêmico (MVP estático). Dados locais no navegador.</div>
+        </div>
+        <div class="md:justify-self-end">
+          <div class="card shadow-soft bg-white p-6 md:p-8 max-w-xl">
+            <h3 class="font-semibold text-lg mb-3">Busca rápida</h3>
+            <div class="grid md:grid-cols-3 gap-3">
+              <input id="fBusca" type="text" placeholder="Modelo / marca" class="input w-full border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              <input id="fMin" type="number" min="0" placeholder="Preço min (R$)" class="input w-full border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              <input id="fMax" type="number" min="0" placeholder="Preço máx (R$)" class="input w-full border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+            <div class="mt-4 flex gap-3">
+              <button id="btnFiltrar" class="btn px-4 py-2 bg-slate-900 text-white hover:opacity-90">Filtrar</button>
+              <button id="btnLimpar" class="btn px-4 py-2 border border-slate-200 bg-white hover:bg-slate-50">Limpar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO -->
+  <section id="catalogo" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+    <div class="flex items-end justify-between gap-4 mb-6">
+      <div>
+        <h2 class="text-2xl font-bold">Catálogo</h2>
+        <p class="text-slate-600">Carros disponíveis por proprietários próximos a você.</p>
+      </div>
+      <div class="text-sm text-slate-500">Clique em "Reservar" para simular uma reserva.</div>
+    </div>
+    <div id="gridCarros" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+  </section>
+
+  <!-- ANUNCIAR -->
+  <section id="anunciar" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+    <div class="grid md:grid-cols-2 gap-8 items-start">
+      <div>
+        <h2 class="text-2xl font-bold">Anunciar seu veículo</h2>
+        <p class="text-slate-600">Cadastre seu carro para locação. Os dados ficam armazenados no seu navegador (localStorage) neste MVP.</p>
+        <form id="formAnunciar" class="mt-6 space-y-4">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm mb-1">Marca</label>
+              <input name="marca" required class="input w-full border border-slate-200 px-3 py-2" placeholder="Ex: Toyota" />
+            </div>
+            <div>
+              <label class="block text-sm mb-1">Modelo</label>
+              <input name="modelo" required class="input w-full border border-slate-200 px-3 py-2" placeholder="Ex: Corolla" />
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm mb-1">Ano</label>
+              <input name="ano" type="number" min="1990" max="2099" required class="input w-full border border-slate-200 px-3 py-2" placeholder="2020" />
+            </div>
+            <div>
+              <label class="block text-sm mb-1">Preço/dia (R$)</label>
+              <input name="preco" type="number" min="0" step="1" required class="input w-full border border-slate-200 px-3 py-2" placeholder="150" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm mb-1">Cidade / Região</label>
+            <input name="cidade" required class="input w-full border border-slate-200 px-3 py-2" placeholder="Ex: São Paulo - SP" />
+          </div>
+          <div>
+            <label class="block text-sm mb-1">URL da imagem</label>
+            <input name="img" class="input w-full border border-slate-200 px-3 py-2" placeholder="https://... (opcional)" />
+          </div>
+          <div class="flex gap-3 pt-2">
+            <button class="btn px-5 py-3 bg-indigo-600 text-white hover:opacity-90" type="submit">Cadastrar</button>
+            <button class="btn px-5 py-3 border border-slate-200 bg-white hover:bg-slate-50" type="reset">Limpar</button>
+          </div>
+          <p id="anunciarMsg" class="text-sm text-green-700 hidden">Carro cadastrado!</p>
+        </form>
+      </div>
+      <div class="card bg-white shadow-soft p-6">
+        <h3 class="font-semibold mb-2">Dicas para fotos</h3>
+        <ul class="list-disc pl-5 text-slate-600 space-y-1">
+          <li>Use boa iluminação e mostre ângulos diferentes.</li>
+          <li>Inclua informações de limpeza e manutenção.</li>
+          <li>Seja transparente com pequenas avarias.</li>
+        </ul>
+        <div class="mt-6 border-t pt-4 text-sm text-slate-500">* Este é um protótipo; nenhuma informação é enviada a servidores.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINHAS RESERVAS -->
+  <section id="minhas-reservas" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+    <div class="flex items-end justify-between gap-4 mb-6">
+      <div>
+        <h2 class="text-2xl font-bold">Minhas Reservas</h2>
+        <p class="text-slate-600">Suas reservas ficam apenas no seu navegador para fins de demonstração.</p>
+      </div>
+      <button id="btnLimparReservas" class="btn px-4 py-2 border border-slate-200 bg-white hover:bg-slate-50">Limpar Reservas</button>
+    </div>
+    <div id="listaReservas" class="grid gap-4"></div>
+  </section>
+
+  <!-- MODAL RESERVA -->
+  <div id="modalReserva" class="fixed inset-0 hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-slate-900/50"></div>
+    <div class="relative bg-white card w-full max-w-lg p-6 shadow-soft">
+      <div class="flex items-start justify-between">
+        <h3 class="text-xl font-semibold">Confirmar reserva</h3>
+        <button id="fecharModal" class="text-slate-500 hover:text-slate-700">✕</button>
+      </div>
+      <div class="mt-4 space-y-3">
+        <div id="resumoCarro" class="text-slate-700"></div>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm mb-1">Retirada</label>
+            <input id="dataIni" type="date" class="input w-full border border-slate-200 px-3 py-2" />
+          </div>
+          <div>
+            <label class="block text-sm mb-1">Devolução</label>
+            <input id="dataFim" type="date" class="input w-full border border-slate-200 px-3 py-2" />
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm mb-1">Observações (opcional)</label>
+          <textarea id="obs" class="input w-full border border-slate-200 px-3 py-2" rows="3" placeholder="Preferência por retirada à noite, por exemplo."></textarea>
+        </div>
+        <div id="precoTotal" class="font-semibold"></div>
+      </div>
+      <div class="mt-6 flex gap-3 justify-end">
+        <button id="cancelarReserva" class="btn px-4 py-2 border border-slate-200 bg-white hover:bg-slate-50">Cancelar</button>
+        <button id="confirmarReserva" class="btn px-4 py-2 bg-indigo-600 text-white hover:opacity-90">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="mt-10 py-10 border-t border-slate-200 text-center text-sm text-slate-500">
+    MVP acadêmico – P2P Carros • Feito com HTML + Tailwind + JS • LocalStorage
+  </footer>
+
+  <script>
+    // ------------------------------
+    // Dados iniciais (mock)
+    // ------------------------------
+    const SEED_CARROS = [
+      { id: crypto.randomUUID(), marca: 'Toyota', modelo: 'Corolla', ano: 2020, preco: 180, cidade: 'São Paulo - SP', img: 'https://images.unsplash.com/photo-1606669128819-5ed0b93dba0b?q=80&w=1200&auto=format&fit=crop' },
+      { id: crypto.randomUUID(), marca: 'Volkswagen', modelo: 'T-Cross', ano: 2021, preco: 200, cidade: 'Curitiba - PR', img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop' },
+      { id: crypto.randomUUID(), marca: 'Chevrolet', modelo: 'Onix', ano: 2019, preco: 120, cidade: 'Belo Horizonte - MG', img: 'https://images.unsplash.com/photo-1517672651691-24622a91b550?q=80&w=1200&auto=format&fit=crop' },
+      { id: crypto.randomUUID(), marca: 'Fiat', modelo: 'Argo', ano: 2022, preco: 140, cidade: 'Rio de Janeiro - RJ', img: 'https://images.unsplash.com/photo-1441148345475-03a2e82f9719?q=80&w=1200&auto=format&fit=crop' },
+      { id: crypto.randomUUID(), marca: 'Renault', modelo: 'Duster', ano: 2018, preco: 150, cidade: 'Porto Alegre - RS', img: 'https://images.unsplash.com/photo-1567818735868-9c6e140f7f1b?q=80&w=1200&auto=format&fit=crop' },
+      { id: crypto.randomUUID(), marca: 'Honda', modelo: 'Civic', ano: 2017, preco: 170, cidade: 'Florianópolis - SC', img: 'https://images.unsplash.com/photo-1549924231-f129b911e442?q=80&w=1200&auto=format&fit=crop' }
+    ];
+
+    const LS_KEYS = {
+      CARROS: 'p2p-carros',
+      RESERVAS: 'p2p-reservas'
+    };
+
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => document.querySelectorAll(sel);
+
+    function getLocal(key, fallback) {
+      try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
+    }
+    function setLocal(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    // Inicializa seed se vazio
+    function ensureSeed() {
+      const carros = getLocal(LS_KEYS.CARROS, []);
+      if (!carros || carros.length === 0) {
+        setLocal(LS_KEYS.CARROS, SEED_CARROS);
+      }
+    }
+
+    // Renderiza cards do catálogo
+    function renderCatalogo(list) {
+      const grid = $('#gridCarros');
+      grid.innerHTML = '';
+      if (!list || list.length === 0) {
+        grid.innerHTML = '<div class="text-slate-500">Nenhum carro encontrado.</div>';
+        return;
+      }
+      list.forEach((c) => {
+        const card = document.createElement('div');
+        card.className = 'card bg-white shadow-soft overflow-hidden flex flex-col';
+        card.innerHTML = `
+          <img src="${c.img || 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1200&auto=format&fit=crop'}" alt="${c.marca} ${c.modelo}" class="h-44 w-full object-cover"/>
+          <div class="p-5 flex-1 flex flex-col">
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="font-semibold text-lg">${c.marca} ${c.modelo}</h3>
+              <span class="text-sm text-slate-500">${c.ano}</span>
+            </div>
+            <div class="mt-1 text-slate-600">${c.cidade}</div>
+            <div class="mt-3 font-bold text-indigo-700">R$ ${Number(c.preco).toFixed(0)}/dia</div>
+            <div class="mt-auto pt-4 flex gap-2">
+              <button data-id="${c.id}" class="btn px-4 py-2 bg-slate-900 text-white hover:opacity-90 reservar">Reservar</button>
+              <button data-id="${c.id}" class="btn px-4 py-2 border border-slate-200 hover:bg-slate-50 detalhes">Detalhes</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      // Bind de eventos
+      $$('#gridCarros .reservar').forEach(btn => btn.addEventListener('click', (e) => openModalReserva(e.target.getAttribute('data-id'))));
+      $$('#gridCarros .detalhes').forEach(btn => btn.addEventListener('click', (e) => showDetalhes(e.target.getAttribute('data-id'))));
+    }
+
+    function showDetalhes(id) {
+      const carros = getLocal(LS_KEYS.CARROS, []);
+      const c = carros.find(x => x.id === id);
+      if (!c) return;
+      alert(`${c.marca} ${c.modelo} (${c.ano})\nCidade: ${c.cidade}\nPreço/dia: R$ ${c.preco}`);
+    }
+
+    // Filtro
+    function aplicarFiltro() {
+      const busca = $('#fBusca').value.trim().toLowerCase();
+      const min = Number($('#fMin').value || 0);
+      const max = Number($('#fMax').value || Infinity);
+      const carros = getLocal(LS_KEYS.CARROS, []);
+      const filtrados = carros.filter(c => {
+        const texto = `${c.marca} ${c.modelo}`.toLowerCase();
+        const preco = Number(c.preco);
+        return (!busca || texto.includes(busca)) && (preco >= min) && (preco <= max);
+      });
+      renderCatalogo(filtrados);
+    }
+
+    // Form de anúncio
+    function bindAnunciar() {
+      const form = $('#formAnunciar');
+      const msg = $('#anunciarMsg');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(form).entries());
+        const carro = {
+          id: crypto.randomUUID(),
+          marca: data.marca.trim(),
+          modelo: data.modelo.trim(),
+          ano: Number(data.ano),
+          preco: Number(data.preco),
+          cidade: data.cidade.trim(),
+          img: data.img?.trim() || ''
+        };
+        const carros = getLocal(LS_KEYS.CARROS, []);
+        carros.unshift(carro);
+        setLocal(LS_KEYS.CARROS, carros);
+        msg.classList.remove('hidden');
+        setTimeout(() => msg.classList.add('hidden'), 2000);
+        form.reset();
+        renderCatalogo(carros);
+        window.location.hash = '#catalogo';
+      });
+    }
+
+    // Modal de reserva
+    let carroSelecionado = null;
+    function openModalReserva(id) {
+      const carros = getLocal(LS_KEYS.CARROS, []);
+      carroSelecionado = carros.find(x => x.id === id) || null;
+      if (!carroSelecionado) return;
+      $('#resumoCarro').innerHTML = `<div class="flex items-center gap-3">
+        <img src="${carroSelecionado.img || 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=300&auto=format&fit=crop'}" alt="${carroSelecionado.marca} ${carroSelecionado.modelo}" class="w-16 h-12 object-cover rounded-md"/>
+        <div>
+          <div class="font-semibold">${carroSelecionado.marca} ${carroSelecionado.modelo} • ${carroSelecionado.ano}</div>
+          <div class="text-slate-600 text-sm">${carroSelecionado.cidade}</div>
+        </div>
+      </div>`;
+      $('#dataIni').value = '';
+      $('#dataFim').value = '';
+      $('#obs').value = '';
+      $('#precoTotal').textContent = '';
+      $('#modalReserva').classList.remove('hidden');
+      $('#modalReserva').classList.add('flex');
+    }
+
+    function closeModal() {
+      $('#modalReserva').classList.add('hidden');
+      $('#modalReserva').classList.remove('flex');
+      carroSelecionado = null;
+    }
+
+    function calcDias(inicio, fim) {
+      const msDia = 24*60*60*1000;
+      const d1 = new Date(inicio);
+      const d2 = new Date(fim);
+      const diff = Math.round((d2 - d1) / msDia);
+      return diff > 0 ? diff : 0;
+    }
+
+    function atualizarPreco() {
+      const ini = $('#dataIni').value;
+      const fim = $('#dataFim').value;
+      if (!ini || !fim || !carroSelecionado) return;
+      const dias = calcDias(ini, fim);
+      if (dias <= 0) { $('#precoTotal').textContent = 'Selecione datas válidas.'; return; }
+      const total = dias * Number(carroSelecionado.preco);
+      $('#precoTotal').textContent = `Total: R$ ${total.toFixed(2)} (${dias} diárias)`;
+    }
+
+    // Reservas
+    function salvarReserva({carro, dataIni, dataFim, obs}) {
+      const reservas = getLocal(LS_KEYS.RESERVAS, []);
+      reservas.unshift({ id: crypto.randomUUID(), carro, dataIni, dataFim, obs, criadoEm: new Date().toISOString() });
+      setLocal(LS_KEYS.RESERVAS, reservas);
+      renderReservas();
+    }
+
+    function renderReservas() {
+      const reservas = getLocal(LS_KEYS.RESERVAS, []);
+      const lista = $('#listaReservas');
+      lista.innerHTML = '';
+      if (reservas.length === 0) {
+        lista.innerHTML = '<div class="text-slate-500">Nenhuma reserva registrada.</div>';
+        return;
+      }
+      reservas.forEach(r => {
+        const dias = calcDias(r.dataIni, r.dataFim);
+        const total = dias * Number(r.carro.preco);
+        const item = document.createElement('div');
+        item.className = 'card bg-white shadow-soft p-4 flex items-center gap-4';
+        item.innerHTML = `
+          <img src="${r.carro.img || 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=300&auto=format&fit=crop'}" class="w-24 h-16 object-cover rounded-md"/>
+          <div class="flex-1">
+            <div class="font-semibold">${r.carro.marca} ${r.carro.modelo} • ${r.carro.ano}</div>
+            <div class="text-sm text-slate-600">${r.carro.cidade} • ${new Date(r.criadoEm).toLocaleString('pt-BR')}</div>
+            <div class="mt-1 text-sm">${r.dataIni} → ${r.dataFim} • ${dias} diária(s) • <span class="font-semibold">R$ ${total.toFixed(2)}</span></div>
+            ${r.obs ? `<div class="mt-1 text-sm text-slate-600">Obs: ${r.obs}</div>` : ''}
+          </div>
+          <button data-id="${r.id}" class="btn px-3 py-2 border border-slate-200 hover:bg-slate-50 excluir">Excluir</button>
+        `;
+        lista.appendChild(item);
+      });
+      // bind excluir
+      $$('#listaReservas .excluir').forEach(btn => btn.addEventListener('click', (e) => {
+        const id = e.target.getAttribute('data-id');
+        const reservas = getLocal(LS_KEYS.RESERVAS, []);
+        setLocal(LS_KEYS.RESERVAS, reservas.filter(x => x.id !== id));
+        renderReservas();
+      }));
+    }
+
+    // Listeners globais
+    function bindGlobal() {
+      $('#btnFiltrar').addEventListener('click', aplicarFiltro);
+      $('#btnLimpar').addEventListener('click', () => {
+        $('#fBusca').value = ''; $('#fMin').value = ''; $('#fMax').value = ''; renderCatalogo(getLocal(LS_KEYS.CARROS, []));
+      });
+      $('#openBooking').addEventListener('click', () => {
+        const carros = getLocal(LS_KEYS.CARROS, []);
+        if (carros[0]) openModalReserva(carros[0].id);
+      });
+      $('#fecharModal').addEventListener('click', closeModal);
+      $('#cancelarReserva').addEventListener('click', closeModal);
+      $('#dataIni').addEventListener('change', atualizarPreco);
+      $('#dataFim').addEventListener('change', atualizarPreco);
+      $('#confirmarReserva').addEventListener('click', () => {
+        const ini = $('#dataIni').value; const fim = $('#dataFim').value; const obs = $('#obs').value.trim();
+        if (!ini || !fim || !carroSelecionado) { alert('Preencha as datas.'); return; }
+        const dias = calcDias(ini, fim);
+        if (dias <= 0) { alert('Selecione um intervalo de datas válido.'); return; }
+        salvarReserva({ carro: carroSelecionado, dataIni: ini, dataFim: fim, obs });
+        closeModal();
+        window.location.hash = '#minhas-reservas';
+      });
+      $('#btnLimparReservas').addEventListener('click', () => {
+        if (confirm('Deseja apagar todas as reservas?')) { localStorage.removeItem(LS_KEYS.RESERVAS); renderReservas(); }
+      });
+    }
+
+    // Boot
+    (function init() {
+      ensureSeed();
+      bindAnunciar();
+      bindGlobal();
+      renderCatalogo(getLocal(LS_KEYS.CARROS, []));
+      renderReservas();
+    })();
+  </script>
+</body>
+</html>
