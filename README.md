@@ -71,12 +71,12 @@ Criar uma plataforma escalável que facilite a conexão entre proprietários de 
 
 ## 🧱 Rascunho da Solução
 O sistema será composto por:  
-- **Front-end** em React.  
-- **Back-end** em Node.js com API REST.  
+- **Front-end** em HTML, CSS + TailWind.  
+- **Back-end** em Java com API REST.  
 - **Banco de dados relacional** (PostgreSQL).  
 - Deploy em **AWS ECS (Fargate)** com balanceamento de carga.  
 - **CI/CD com GitHub Actions** garantindo integração contínua.  
-- **Monitoramento** em Grafana + Prometheus.  
+- **Monitoramento** em Datadog.  
 
 ---
 
@@ -84,9 +84,9 @@ O sistema será composto por:
 - **Cloud AWS/Azure/GCP**  
 - **GitHub Actions**  
 - **Docker**  
-- **Terraform**  
+- **Terraform/CloudFormation**  
 - **PostgreSQL**  
-- **Grafana/Prometheus**  
+- **Datadog**  
 
 ---
 
@@ -98,7 +98,6 @@ Link para o vídeo gravado explicando a ideia do grupo:
 
 ## 💻 Código-Fonte do MVP
 Se houver, incluir o código-fonte do MVP desenvolvido:  
-[Inserir link ou pasta do código]
 
 ---
 
@@ -112,7 +111,7 @@ Será utilizado **PostgreSQL**, com estrutura relacional contendo tabelas como:
 ---
 
 ## 🧮 Versões dos Softwares
-- Node.js 18  
+- Java 21 
 - PostgreSQL 15  
 - Docker 25.x  
 - Terraform 1.9  
@@ -131,10 +130,9 @@ Será utilizado **PostgreSQL**, com estrutura relacional contendo tabelas como:
 
 ## 📚 Referências
 - [AWS Documentation](https://docs.aws.amazon.com/)  
+- [Azure Documentation](https://azure.microsoft.com/)
 - [Terraform](https://developer.hashicorp.com/terraform/docs)  
 - [Docker](https://docs.docker.com/)  
-- [Grafana](https://grafana.com/docs/)  
-- [Prometheus](https://prometheus.io/docs/)  
 
 ---
 
