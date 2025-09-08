@@ -23,7 +23,7 @@
   <header class="sticky top-0 z-30 bg-white/80 backdrop-blur border-b border-slate-200">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-2xl bg-slate-900 text-white grid place-content-center font-black">MobEasy</div>
+        <div class="w-9 h-9 rounded-2xl bg-slate-900 text-white grid place-content-center font-black">P2P</div>
         <span class="font-semibold">Carros</span>
       </div>
       <nav class="hidden md:flex items-center gap-6 text-sm">
@@ -191,12 +191,12 @@
     // Dados iniciais (mock)
     // ------------------------------
     const SEED_CARROS = [
-      { id: crypto.randomUUID(), marca: 'Toyota', modelo: 'Corolla', ano: 2020, preco: 180, cidade: 'São Paulo - SP', img: 'https://images.unsplash.com/photo-1606669128819-5ed0b93dba0b?q=80&w=1200&auto=format&fit=crop' },
-      { id: crypto.randomUUID(), marca: 'Volkswagen', modelo: 'T-Cross', ano: 2021, preco: 200, cidade: 'Curitiba - PR', img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop' },
-      { id: crypto.randomUUID(), marca: 'Chevrolet', modelo: 'Onix', ano: 2019, preco: 120, cidade: 'Belo Horizonte - MG', img: 'https://images.unsplash.com/photo-1517672651691-24622a91b550?q=80&w=1200&auto=format&fit=crop' },
-      { id: crypto.randomUUID(), marca: 'Fiat', modelo: 'Argo', ano: 2022, preco: 140, cidade: 'Rio de Janeiro - RJ', img: 'https://images.unsplash.com/photo-1441148345475-03a2e82f9719?q=80&w=1200&auto=format&fit=crop' },
-      { id: crypto.randomUUID(), marca: 'Renault', modelo: 'Duster', ano: 2018, preco: 150, cidade: 'Porto Alegre - RS', img: 'https://images.unsplash.com/photo-1567818735868-9c6e140f7f1b?q=80&w=1200&auto=format&fit=crop' },
-      { id: crypto.randomUUID(), marca: 'Honda', modelo: 'Civic', ano: 2017, preco: 170, cidade: 'Florianópolis - SC', img: 'https://images.unsplash.com/photo-1549924231-f129b911e442?q=80&w=1200&auto=format&fit=crop' }
+      { id: crypto.randomUUID(), marca: 'Toyota', modelo: 'Corolla', ano: 2020, preco: 180, cidade: 'São Paulo - SP', img: 'https://upload.wikimedia.org/wikipedia/commons/f/f6/Toyota_Corolla_Limousine_Hybrid_Genf_2019_1Y7A5576.jpg' },
+      { id: crypto.randomUUID(), marca: 'Volkswagen', modelo: 'T-Cross', ano: 2021, preco: 200, cidade: 'Curitiba - PR', img: 'https://upload.wikimedia.org/wikipedia/commons/8/80/Volkswagen_T-Cross_%282023%29_1X7A1967.jpg'} ,
+      { id: crypto.randomUUID(), marca: 'Chevrolet', modelo: 'Onix', ano: 2019, preco: 120, cidade: 'Belo Horizonte - MG', img: 'https://http2.mlstatic.com/D_NQ_NP_801638-MLA80840135430_122024-B.webp' },
+      { id: crypto.randomUUID(), marca: 'Fiat', modelo: 'Argo', ano: 2022, preco: 140, cidade: 'Rio de Janeiro - RJ', img: 'https://http2.mlstatic.com/D_NQ_NP_914200-MLA80374200801_112024-B.webp' },
+      { id: crypto.randomUUID(), marca: 'Renault', modelo: 'Duster', ano: 2018, preco: 150, cidade: 'Porto Alegre - RS', img: 'https://revistaautomotivo.com.br/wp-content/uploads/2024/01/renault-duster-2024-5-1.jpg' },
+      { id: crypto.randomUUID(), marca: 'Honda', modelo: 'Civic', ano: 2017, preco: 170, cidade: 'Florianópolis - SC', img: 'https://www.autodata.com.br/admin/imagens/noticias/honda-civic-2020-tem-nova-versao-de-entrada_68fb894f909bff337c86609fe56aea1b.jpg' }
     ];
 
     const LS_KEYS = {

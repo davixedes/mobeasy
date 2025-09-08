@@ -36,7 +36,7 @@ Criar uma plataforma escalável que facilite a conexão entre proprietários de 
 - **Infraestrutura como Código (IaC)** com Terraform para provisionar recursos.  
 - **Pipeline de CI/CD** com GitHub Actions para automatizar build, testes e deploy.  
 - **Containers Docker** para padronizar o ambiente.  
-- **Monitoramento** com Grafana e Prometheus para métricas e alertas.
+- **Monitoramento** com Datadog para métricas e alertas.
 
 ---
 
@@ -92,7 +92,7 @@ O sistema será composto por:
 
 ## 🎥 Vídeo Explicativo
 Link para o vídeo gravado explicando a ideia do grupo:  
-[Inserir link do vídeo]
+- [Video](https://mobeasy.s3.sa-east-1.amazonaws.com/Screen+Recording+2025-09-07+at+17.55.39.mov)
 
 ---
 
@@ -116,7 +116,7 @@ Será utilizado **PostgreSQL**, com estrutura relacional contendo tabelas como:
 - Docker 25.x  
 - Terraform 1.9  
 - GitHub Actions (workflow YAML)  
-- Grafana 11 + Prometheus 3  
+- Datadog
 
 ---
 
